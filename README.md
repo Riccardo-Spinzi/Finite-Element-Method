@@ -7,11 +7,15 @@ means a linear interpolation is used to get the displacement results.
 
 Future aims:
 
-~ Solve problems with different types of elements(both trusses and beams);\n
+~ Solve problems with different types of elements(both trusses and beams);
+
 ~ Implement the possibility of having varying properties on one single element;
+
 ~ Calculate every force or moment on each node (up to now they must be computed separately);
-~ Solve systems where some node displacements are imposed as boundary conditions
-~ Model correctly the presence of concentrated springs as constraints with specific structural properties
+
+~ Solve systems where some node displacements are imposed as boundary conditions;
+
+~ Model correctly the presence of concentrated springs as constraints with specific structural properties;
 
 
 28-11
