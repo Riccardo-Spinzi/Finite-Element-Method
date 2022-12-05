@@ -3,36 +3,36 @@ function plot_vibration_mode( MODEL , ELEMENTS, NODES )
 MODE = MODEL.vib_mode;
 [M,N] = size(ELEMENTS);
 
-% riscalo lo spostamento per visualizzarlo tramite n_visual
+% re-scale the displacements to see them better in the plots
 n_visual = 1000;
 
-ndof = NODES(1).ndof; % suppongo che tutti gli elementi abbiamo nodi dello stesso tipo
+ndof = NODES(1).ndof; % hypothesis: all elements are of the same type
 U_new = reshape(MODE.*n_visual , ndof, length(MODE)/ndof)';
 
 figure
 hold on
 for i = 1 : N 
-    %ricavo i nodi da cui passa ogni elemento
+    % boundary nodes for each element
     nod_1 = ELEMENTS(i).nodes(1);
     nod_2 = ELEMENTS(i).nodes(2);
-    %ottengo le coordinate dei nodi
+    % nodes coordinates
     plot_x_nod_1 = NODES(nod_1).coord_x;
     plot_y_nod_1 = NODES(nod_1).coord_y;
 
     plot_x_nod_2 = NODES(nod_2).coord_x;
     plot_y_nod_2 = NODES(nod_2).coord_y;
     
-    % plotto i nodi
+    % nodes plot
     plot([plot_x_nod_1,plot_x_nod_2],[plot_y_nod_1,plot_y_nod_2],'--b')
 
-    %ottengo le coordinate dei nodi deformate
+    % nodes coordinates with calculated displacement 
     plot_x_nod_1 = NODES(nod_1).coord_x + U_new(nod_1,1);
     plot_y_nod_1 = NODES(nod_1).coord_y + U_new(nod_1,2);
 
     plot_x_nod_2 = NODES(nod_2).coord_x + U_new(nod_2,1);
     plot_y_nod_2 = NODES(nod_2).coord_y + U_new(nod_2,2);
 
-    % plotto i nodi deformati
+    % deformated nodes plot
     plot([plot_x_nod_1,plot_x_nod_2],[plot_y_nod_1,plot_y_nod_2],'r')
 end
 axis([-inf, inf, -inf, inf])
