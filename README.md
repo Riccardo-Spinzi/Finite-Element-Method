@@ -10,7 +10,7 @@ parameter.
 
 Implemented features:
 
-~ Solve problems with different types of elements(both trusses and beams);
+~ Solve problems with different types of elements (both trusses and beams);
 
 ~ Implement the possibility of having varying properties on one single element;
 
