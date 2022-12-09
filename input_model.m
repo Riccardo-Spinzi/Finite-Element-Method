@@ -1,7 +1,7 @@
 function INPUT = input_model
 
 % --- Input
-% INPUT.elements                : [ node_A node_B ID_prop ]
+% INPUT.elements                : [ node_A node_B ID_prop ID_material ]
 % INPUT.nodes                   : [ ID_node x_coord y_coord ]
 % INPUT.E                       : Young's modulus        
 % INPUT.A                       : Section of the beam  
@@ -17,76 +17,53 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-INPUT.elements = [  1 4 1
-                    1 3 1
-                    3 4 1
-                    3 6 1
-                    4 5 1
-                    4 6 1 
-                    3 5 1 
-                    5 6 1 
-                    5 8 1 
-                    6 7 1
-                    6 8 1 
-                    5 7 1 
-                    7 8 1 
-                    8 2 1 
-                    7 2 1];
+INPUT.elements = [  1 2 2 1
+                    2 3 2 2
+                    3 4 1 1];
 
 % -- Nodes
-INPUT.nodes = [ 1   0         0
-                2   10160     0
-                3   2540      0
-                4   2540      3810
-                5   5080      0
-                6   5080      5080
-                7   7620      0
-                8   7620      3810];
+INPUT.nodes = [ 1 0  1;
+                2 1  1;
+                3 3  1;
+                4 3  0;];
 
 % -- Section properties
-E = 200000;                % [MPa]
-A = 10;                    % [mm^2]
-J = 0;
-INPUT.E = E;
-INPUT.A = A;
-INPUT.J = J;
-INPUT.section_prop = [ E*A E*J ];
+E = 1;                % [MPa]
+A = 1000;                            % [mm^2]
+J = 1000;
+INPUT.section_prop = [ E*A E*J
+                       E*A 2*E*J];
 
-% -- Concentrated mass
-m = 1e-4 ;                  % [t]
-INPUT.mass = [1 1 m
-              1 2 m
-              2 1 m
-              2 2 m
-              3 1 m
-              3 2 m
-              4 1 m
-              4 2 m
-              5 1 m
-              5 2 m
-              6 1 m
-              6 2 m
-              7 1 m
-              7 2 m
-              8 1 m
-              8 2 m];
+% -- Lumped mass on each node
+m = 1e-4 ;                    % [t]
+[N,M] = size(INPUT.nodes);
+for i = 1 : 3 * N
+    if i == 1 | k == 4
+        k=1;
+    end
+    INPUT.mass(i,1) = i;
+    INPUT.mass(i,2) = k;
+    INPUT.mass(i,3) = m;
+    k=k+1;
+end
 
 % -- Loading conditions
-INPUT.load = [ 4 2 -35
-               6 2 -35
-               8 2 -35];
+INPUT.load = [ 2 2 100
+               3 2 200];
 
 % --- type of solution
-INPUT.solution = 'eigenmodes';
+INPUT.solution = 'static';
 
 % --- Vibration mode
-INPUT.mode = 4;
+INPUT.mode = 3;
 
 % -- Boundary conditions
 INPUT.spc = [ 1 1
-              1 2 
-              2 1 
-              2 2 ];         
+              1 2
+              1 3
+              4 1 
+              4 2
+              4 3];         
                           
 
 

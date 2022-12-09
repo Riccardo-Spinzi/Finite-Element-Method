@@ -1,5 +1,16 @@
 function ELEMENTS = element_stiffness( ELEMENTS, NODES, n_els )
 
+% --- Check the type of the elements
+truss = 0;
+beam = 0;
+for i = 1 : n_els
+    if strcmp(ELEMENTS(i).type,'truss') == 1
+        truss = 1;
+    elseif strcmp(ELEMENTS(i).type,'beam') == 1
+        beam = 1;
+    end
+end
+
 for i = 1 : n_els
     el_nodes = ELEMENTS(i).nodes;
 
@@ -16,13 +27,25 @@ for i = 1 : n_els
         
         % Transformation matrix
         T = [c s 0 0; 0 0 c s];
-
-        % Properties and stiffness matrix
-        EA = ELEMENTS(i).EA;
-        ELEMENTS(i).K_el_loc = EA/l*[1 -1; -1 1];
-    
+        
+        switch (truss - beam)
+            case 1
+                % pure truss case
+                % Properties and stiffness matrix
+                EA = ELEMENTS(i).EA;
+                ELEMENTS(i).K_el_loc = EA/l*[1 -1; -1 1];
+            case 0 
+                % mixed truss and beams case
+                EA = ELEMENTS(i).EA;
+                EJ = ELEMENTS(i). EJ;
+                alpha = (2 * EA) / (l * EJ);
+                ELEMENTS(i).K_el_loc = EJ/2*[alpha -alpha; -alpha alpha];
+        end
     elseif strcmp( ELEMENTS(i).type, 'beam') == 1
 
+        if ELEMENTS(i).EJ == 0
+            error("J = 0 for the beam. You can set it in the input_model.m file ")
+        end
         % Transformation matrix
         T_node = [c s 0; -s c 0; 0 0 1];
         T = [T_node zeros(3,3); zeros(3,3) T_node];

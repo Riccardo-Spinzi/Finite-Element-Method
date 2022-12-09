@@ -9,7 +9,7 @@ INPUT = input_model;
 
 % --- 2. Solution
 [ ELEMENTS, NODES, MODEL ] = analyze_structure( INPUT );
-
+ 
 %--- 3.a  Post-process: recovery of forces
 ELEMENTS = force_recovery( MODEL, ELEMENTS );
 
@@ -20,5 +20,3 @@ plot_deformed_shapes( MODEL, ELEMENTS, NODES );
 if strcmp(INPUT.solution,'eigenmodes') == 1
     plot_vibration_mode( MODEL , ELEMENTS, NODES );
 end
-
-
