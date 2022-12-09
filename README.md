@@ -23,21 +23,17 @@ Future aims:
 
 Release note:
 
-28-11
+----28-11
 
-v1.0 Finished 
+~ v1.0 Finished 
 
-02-12
+----02-12
 
-v1.1 Corrected a bug where having a different number of elements and nodes built singular stiffness matrices
+~ v1.1 Corrected a bug where having a different number of elements and nodes built singular stiffness matrices
 
-09-12 
+----09-12 
 
-v1.3 	
-
-Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly
-
-Implemented a generic method to evaluate matrices K and M for a mixed-elements structure
-  
+~ v1.3 	Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly;
+Implemented a generic method to evaluate matrices K and M for a mixed-elements structure;
 Implemented a way to input more than one material properties (A,E,J) in the model
  
