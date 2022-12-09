@@ -4,8 +4,9 @@ F.E.M. depository ~ WIP
 This code comes as a really basic algorithm to evaluate displacements and forces in a 2D structure 
 modeled with Trusses or Euler-Bernoulli beam elements. Each element is made up of 2 nodes, which 
 means a linear interpolation is used to get the displacement results. To use the program open the 
-Input_model.m file and write the specific structure's properties. To modify how big the displacements
-and the vibration modes open the "plot_..." .m files and change the n_visual parameter. 
+Input_model.m file and write the specific structure's properties. To modify the scale of the 
+displacements and the vibration modes figures open the "plot_..." .m files and change the n_visual 
+parameter. 
 
 Implemented features:
 
@@ -21,19 +22,21 @@ Future aims:
 
 ~ Model correctly the presence of concentrated springs as constraints with specific structural properties;
 
-Release note:
+Release notes:
 
-----28-11
+----28-11 RELEASED v1.0
 
-~ v1.0 Finished 
+~  Released first version of F.E.M.;
 
-----02-12
+----02-12 RELEASED v1.1
 
-~ v1.1 Corrected a bug where having a different number of elements and nodes built singular stiffness matrices
+~  Corrected a bug where having a different number of elements and nodes built singular stiffness matrices;
 
-----09-12 
+----09-12 RELEASED v1.3 
 
-~ v1.3 	Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly;
-Implemented a generic method to evaluate matrices K and M for a mixed-elements structure;
-Implemented a way to input more than one material properties (A,E,J) in the model
+~ 	Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly;
+
+~ Implemented a generic method to evaluate matrices K and M for a mixed-elements structure;
+
+~ Implemented a way to input more than one material properties (A,E,J) in the model;
  
