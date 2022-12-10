@@ -22,7 +22,7 @@ Future aims:
 
 ~ Model correctly the presence of concentrated springs as constraints with specific structural properties;
 
-Release notes:
+Changelog:
 
 ----28-11 RELEASED v1.0
 
