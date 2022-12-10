@@ -12,9 +12,12 @@ Implemented features:
 
 ~ Solve problems with different types of elements (both trusses and beams);
 
-~ Implement the possibility of having varying properties on one single element;
+~ Implemented the possibility of having different properties on each element;
 
 Future aims:
+
+
+~ Implement the possibility of having varying properties on one single element;
 
 ~ Calculate every force or moment on each node (up to now they must be computed separately);
 
