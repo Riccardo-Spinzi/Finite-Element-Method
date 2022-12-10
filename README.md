@@ -2,7 +2,7 @@
 F.E.M. depository ~ WIP
 
 This code comes as a really basic algorithm to evaluate displacements and forces in a 2D structure 
-modeled with Trusses or Euler-Bernoulli beam elements. Each element is made up of 2 nodes, which 
+modeled with Truss or Euler-Bernoulli beam elements. Each element is made up of 2 nodes, which 
 means a linear interpolation is used to get the displacement results. To use the program open the 
 Input_model.m file and write the specific structure's properties. To modify the scale of the 
 displacements and the vibration modes figures open the "plot_..." .m files and change the n_visual 
