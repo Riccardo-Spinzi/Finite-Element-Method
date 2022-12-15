@@ -28,15 +28,15 @@ Changelog:
 
 ----28-11 RELEASED v1.0
 
-~  Released first version of F.E.M.;
+~ Released first version of F.E.M.;
 
 ----02-12 RELEASED v1.1
 
-~  Corrected a bug where having a different number of elements and nodes built singular stiffness matrices;
+~ Corrected a bug where having a different number of elements and nodes built singular stiffness matrices;
 
 ----09-12 RELEASED v1.3 
 
-~ 	Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly;
+~	Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly;
 
 ~ Implemented a generic method to evaluate matrices K and M for a mixed-elements structure;
 
@@ -44,13 +44,13 @@ Changelog:
  
  ----16-12 RELEASED v1.4
  
- ~ Implemented a method to evaluate imposed node displacements;
+~ Implemented a method to evaluate imposed node displacements;
  
- ~ Modified the force_recovery.m code to get every force or moment on each element;
+~ Modified the force_recovery.m code to get every force or moment on each element;
  
- ~ Added a FEM_setup.txt file to explain better how to set up the model in order to run the code;
+~ Added a FEM_setup.txt file to explain better how to set up the model in order to run the code;
  
- ~ Added an example of input_model.m file at the bottom of the FEM_setup.txt file;
+~ Added an example of input_model.m file at the bottom of the FEM_setup.txt file;
  
  
  
