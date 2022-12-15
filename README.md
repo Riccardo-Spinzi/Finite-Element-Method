@@ -14,14 +14,13 @@ Implemented features:
 
 ~ Implemented the possibility of having different properties on each element;
 
-Future aims:
-
-
-~ Implement the possibility of having varying properties on one single element;
-
-~ Calculate every force or moment on each node (up to now they must be computed separately);
+~ Calculate every force or moment on each node;
 
 ~ Solve systems where some node displacements are imposed as boundary conditions;
+
+Future aims:
+
+~ Implement the possibility of having varying properties on one single element;
 
 ~ Model correctly the presence of concentrated springs as constraints with specific structural properties;
 
@@ -42,4 +41,17 @@ Changelog:
 ~ Implemented a generic method to evaluate matrices K and M for a mixed-elements structure;
 
 ~ Implemented a way to input more than one material properties (A,E,J) in the model;
+ 
+ ----16-12 RELEASED v1.4
+ 
+ ~ Implemented a method to evaluate imposed node displacements;
+ 
+ ~ Modified the force_recovery.m code to get every force or moment on each element;
+ 
+ ~ Added a FEM_setup.txt file to explain better how to set up the model in order to run the code;
+ 
+ ~ Added an example of input_model.m file at the bottom of the FEM_setup.txt file;
+ 
+ 
+ 
  
