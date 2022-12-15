@@ -175,7 +175,8 @@ NOTE: the MODEL struct will have 4 fields more once the program is terminated:
 						
 ---------------------------------------- EXAMPLE OF INPUT SET UP-------------------------------------------------------
 
-This example contains the F.E. model of a bridge.
+This example contains the F.E. model of a bridge. To modify the scale of the displacements and the vibration modes 
+figures open the "plot_..." .m files and change the n_visual parameter. 
 
 % -- Init
 INPUT = struct();
