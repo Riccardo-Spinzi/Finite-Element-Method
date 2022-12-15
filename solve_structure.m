@@ -1,5 +1,22 @@
 function MODEL = solve_structure( MODEL )
 
+       % % --------------- FUNCTION INFO ---------------- % %
+
+% solve_structure computes the solution of the structural problem by
+% solving the linear system K*u = F.
+%
+%                    MODEL = solve_structure( MODEL )
+%
+% -------------------------------------------------------------------------
+% Input arguments:
+% MODEL               [struct]      MODEL structure                 [multi] 
+%
+% -------------------------------------------------------------------------
+% Output arguments:
+% MODEL               [struct]      struct containing parameters     
+%                                   for the MODEL of the structure  [multi]
+% -------------------------------------------------------------------------
+
 constr_dofs = [MODEL.constr_dofs MODEL.pointer];
 
 for i = 1 : length(MODEL.pointer)
@@ -22,6 +39,6 @@ MODEL.U = MODEL.K \ MODEL.F;    % [mm]
 % Expand displacements to the global vector
 MODEL.U_unc = zeros( MODEL.ndof, 1);
 MODEL.U_unc( MODEL.free_dofs ) = MODEL.U;
-
+MODEL.U_unc = MODEL.U_unc + MODEL.U_bar;
 
 return

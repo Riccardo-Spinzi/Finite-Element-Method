@@ -1,5 +1,26 @@
 function ELEMENTS = element_stiffness( ELEMENTS, NODES, n_els )
 
+       % % --------------- FUNCTION INFO ---------------- % %
+
+% element_stiffness completes the ELEMENTS structs with more informations
+% like the length of each element, their local stiffness matrix, their 
+% transformation matrix T (with its relative rotation angle) and their
+% properties, EA and EJ. 
+%
+%          ELEMENTS = element_stiffness( ELEMENTS, NODES, n_els )
+%
+% -------------------------------------------------------------------------
+% Input arguments:
+% ELEMENTS            [struct]      ELEMENTS structure              [multi] 
+% NODES               [struct]      NODES structure                 [multi] 
+% n_els               [1x1 double]  number of structure's elements  [-]
+%
+% -------------------------------------------------------------------------
+% Output arguments:
+% ELEMENTS            [struct]      vector of structs containing      
+%                                   the ELEMENTS of the structure   [multi]
+% -------------------------------------------------------------------------
+  
 % --- Check the type of the elements
 truss = 0;
 beam = 0;

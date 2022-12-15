@@ -1,5 +1,29 @@
 function [ ELEMENTS, NODES, MODEL ] = analyze_structure( INPUT )
 
+       % % --------------- FUNCTION INFO ---------------- % %
+
+% analyze_structure is the main function composing the F.E. method. It
+% builds the main structs and computes all the parameters to get the
+% displacement solution MODEL.U. Then, it displays the deformed shape 
+% and the vibration modes of the structure. 
+%
+%         [ ELEMENTS, NODES, MODEL ] = analyze_structure( INPUT )
+%
+% -------------------------------------------------------------------------
+% Input arguments:
+% INPUT               [struct]      INPUT structure                 [multi] 
+% 
+%
+% -------------------------------------------------------------------------
+% Output arguments:
+% ELEMENTS            [struct]      vector of structs containing      
+%                                   the ELEMENTS of the structure   [multi]
+% NODES               [struct]      vector of structs containing      
+%                                   the NODES of the structure      [multi]
+% MODEL               [struct]      struct containing parameters     
+%                                   for the MODEL of the structure  [multi]
+% -------------------------------------------------------------------------
+ 
 % --- Set model
 [ ELEMENTS, NODES, MODEL ] = set_model( INPUT );
 

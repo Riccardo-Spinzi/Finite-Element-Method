@@ -1,11 +1,30 @@
 function plot_deformed_shapes( MODEL, ELEMENTS, NODES )
+       
+        % % --------------- FUNCTION INFO ---------------- % %
+
+% plot_deformed_shapes draws the figure containing the original and the
+% deformed configurations of the structure, using the solution of the
+% structural problem obtained with the F.E. method.
+%
+%             plot_deformed_shapes( MODEL, ELEMENTS, NODES )
+%
+% -------------------------------------------------------------------------
+% Input arguments:
+% MODEL               [struct]      MODEL structure                 [multi] 
+% ELEMENTS            [struct]      ELEMENTS structure              [multi] 
+% NODES               [struct]      NODES structure                 [multi] 
+%
+% -------------------------------------------------------------------------
+% Output arguments:
+%
+% -------------------------------------------------------------------------
 
 [M,N] = size(ELEMENTS);
 
 % re-scale the displacements to see them better in the plots
-n_visual = 15;
+n_visual = 1;
 
-ndof = 3; % hypothesis: all elements are of the same type
+ndof = 3; % all elements are treated as beams
 U_new = reshape(MODEL.U_unc.*n_visual , ndof, length(MODEL.U_unc)/ndof)';
 
 figure
@@ -35,6 +54,7 @@ for i = 1 : N
     % deformed nodes plot
     plot([plot_x_nod_1,plot_x_nod_2],[plot_y_nod_1,plot_y_nod_2],'r')
 end
+
 axis([-inf, inf, -inf, inf])
 xlabel('x [mm]')
 ylabel('y [mm]')

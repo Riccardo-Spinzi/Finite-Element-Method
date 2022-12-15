@@ -2,7 +2,7 @@ clear
 close all
 clc
 
-%% FEM METHOD
+%% F.E. METHOD
     
 % --- 1. Pre-process
 INPUT = input_model;
@@ -18,5 +18,5 @@ plot_deformed_shapes( MODEL, ELEMENTS, NODES );
 
 %--- 3.c  Post-process: plot vibration modes
 if strcmp(INPUT.solution,'eigenmodes') == 1
-    plot_vibration_mode( MODEL , ELEMENTS, NODES );
+    plot_vibration_mode( MODEL, ELEMENTS, NODES );
 end

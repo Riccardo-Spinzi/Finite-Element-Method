@@ -1,5 +1,25 @@
 function MODEL = assembly_stiffness( ELEMENTS, MODEL )
 
+         % % --------------- FUNCTION INFO ---------------- % %
+
+% assembly_stiffness computes the system's stiffness matrix in order to
+% solve the structural problem. It does so by exploiting the pointers in
+% the ELEMENTS.ptrs vector for each element.
+%
+%             MODEL = assembly_stiffness( ELEMENTS, MODEL )
+%
+% -------------------------------------------------------------------------
+% Input arguments:
+% ELEMENTS            [struct]      ELEMENTS structure              [multi] 
+% MODEL               [struct]      MODEL structure                 [multi] 
+%
+% -------------------------------------------------------------------------
+% Output arguments:
+% MODEL               [struct]      struct containing parameters     
+%                                   for the MODEL of the structure  [multi]
+% -------------------------------------------------------------------------
+ 
+
 % --- Assembly stiffness matrix
 for i = 1 : MODEL.nels
     ptrs = ELEMENTS( i ).ptrs;

@@ -1,5 +1,23 @@
 function MODEL = solve_dynamics( MODEL, mode )
 
+       % % --------------- FUNCTION INFO ---------------- % %
+
+% solve_dynamics computes the natural frequencies and the vibration modes
+% of the structure by solving the eigenvalue problem (A - lambda*I) = 0,
+% where A is M \ K and lambda is w^2 (square of the natural frequencies).
+%
+%                  MODEL = solve_dynamics( MODEL, mode )
+%
+% -------------------------------------------------------------------------
+% Input arguments:
+% MODEL               [struct]      MODEL structure                 [multi] 
+% mode                [1x1 double]  number of the vibration mode    [-]
+% -------------------------------------------------------------------------
+% Output arguments:
+% MODEL               [struct]      struct containing parameters     
+%                                   for the MODEL of the structure  [multi]
+% -------------------------------------------------------------------------
+
 M = MODEL.M;
 K = MODEL.K_unc;
 
