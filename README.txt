@@ -1,5 +1,5 @@
 # Finite-Element-Method
-F.E.M. depository ~ WIP
+F.E.M. repository ~ WIP
 
 This code comes as a really basic algorithm to evaluate displacements and forces in a 2D structure 
 modeled with Truss or Euler-Bernoulli beam elements. Each element is made up of 2 nodes, which 
