@@ -23,19 +23,25 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-INPUT.elements = [ ];
+INPUT.elements = [ 1 2 2 1
+                   2 3 2 2
+                   3 4 1 1];
 
 % -- Nodes
-INPUT.nodes = [ ];
+INPUT.nodes = [ 1 0 1
+                2 1 1
+                3 3 1
+                4 3 0];
 
 % -- Section properties
-E = ;                            % [MPa]
-A = ;                            % [mm^2]
-J = ;
-INPUT.section_prop = [ ];
+E = 1;                               % [MPa]
+A = 1000;                            % [mm^2]
+J = 1000;
+INPUT.section_prop = [ 1000 1000
+                       1000 2000];
 
 % -- Lumped mass on each node
-m = ;                            % [tons]
+m = 0;                            % [tons]
 [N,M] = size(INPUT.nodes);
 for i = 1 : 3 * N
     if i == 1 | k == 4
@@ -48,16 +54,22 @@ for i = 1 : 3 * N
 end
 
 % -- Loading conditions
-INPUT.load = [  ];
+INPUT.load = [ 2 2 90];
 
 % --- type of solution
-INPUT.solution = 'eigenmodes';
+INPUT.solution = 'static';
 
 % --- Vibration mode
-INPUT.mode = ;
+INPUT.mode = 0;
 
 % -- Boundary conditions
-INPUT.spc = [ ];         
+INPUT.spc = [ 1 1 0
+              1 2 0
+              1 3 0
+              3 2 0.2
+              4 1 0
+              4 2 0
+              4 3 0];         
           
 
 
