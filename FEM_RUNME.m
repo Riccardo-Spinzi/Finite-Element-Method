@@ -1,9 +1,6 @@
 clear
 close all
 clc
-%% NOTE
-% risolvere bug per calcolare strutture con u=u_bar
-% togliere caso matrice truss alpha che non serve a nulla
 
 %% F.E. METHOD
     
