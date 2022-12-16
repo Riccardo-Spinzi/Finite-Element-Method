@@ -23,7 +23,7 @@ MODE = MODEL.vib_mode;
 [M,N] = size(ELEMENTS);
 
 % re-scale the displacements to see them better in the plots
-n_visual = 1;
+n_visual = 1000;
 
 ndof = 3; % all elements are treated as beams
 U_new = reshape(MODE.*n_visual , ndof, length(MODE)/ndof)';

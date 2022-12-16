@@ -17,7 +17,7 @@ function MODEL = solve_structure( MODEL )
 %                                   for the MODEL of the structure  [multi]
 % -------------------------------------------------------------------------
 
-constr_dofs = [MODEL.constr_dofs MODEL.pointer];
+constr_dofs = [MODEL.constr_dofs];
 
 for i = 1 : length(MODEL.pointer)
     Idx_null = MODEL.free_dofs == MODEL.pointer(i); % finding X indices corresponding to pointer elements
@@ -27,11 +27,20 @@ end
 % Store unconstrained K and F
 MODEL.K_unc = MODEL.K;
 MODEL.F_unc = MODEL.F;
-
+% MATRICE UTILE SE HO DISPLACEMENT IMPOSTI
+K_try = MODEL.K;
+% se ho un U=U_bar allora modifico K e F
+if sum(abs(MODEL.U_bar)) > 0
+    K_try( find(abs(MODEL.U_bar) > 0) , : ) = 0;
+    F_imposed = - K_try( : , abs(MODEL.U_bar) > 0 ) * MODEL.U_bar(abs(MODEL.U_bar) > 0);
+    MODEL.F = MODEL.F + F_imposed;
+end
 % Impose constraints
 MODEL.K( constr_dofs, : ) = [];
 MODEL.K( :, constr_dofs ) = [];
 MODEL.F( constr_dofs ) = [];
+
+
 
 % Solve problem
 MODEL.U = MODEL.K \ MODEL.F;    % [mm]
