@@ -2,9 +2,8 @@
 ------------------------------------ F.E.M. v1.4 ------------------------------------------
 
 15/12/2022 
-In this file you'll find how to set up the input_model.m file in order 
-to solve the structural problem and plot the deformed shape and the 
-vibration modes of the structure.
+In this file you'll find how to set up the input_model.m file in order to solve the 
+structural problem and plot the deformed shape and the vibration modes of the structure.
 
 if you find any bug please contact me: 
 	
@@ -26,35 +25,41 @@ You can find any update to my F.E.M. algorithm on:
 	last element on your sketch). On the bottom of this txt you will 
 	find a ready-to-use input_model script to use in order to try the 
 	algorithm.
+	Also note that to get displacements in millimiters, you should give
+	inputs using N and mm as units of measure
 
 ----------------------------------INTRODUCTION---------------------------------------------
 
 First, let's introduce the input_model parameters that you'll need to set:
 
-1. INPUT.elements                : [ node_A node_B ID_prop ID_material ]
-2. INPUT.nodes                   : [ ID_node x_coord y_coord ]
-3. INPUT.section_prop            : [ E*A E*J ]                            
-4. INPUT.mass                    : [ ID_node component magn]
-5. INPUT.load                    : [ ID_node component magn ]
-6. INPUT.solution                : 'static' or 'eigenmodes'
-7. INPUT.mod                     : selected vibration mode 
-8. INPUT.spc                     : [ ID_node component magn ] 
+01. INPUT.elements                : [ node_A node_B ID_prop ID_material ]
+02. INPUT.nodes                   : [ ID_node x_coord y_coord ]
+03. INPUT.section_prop            : [ E*A E*J ]                            
+04. INPUT.load                    : [ ID_node component magn ]
+05. INPUT.spc                     : [ ID_node component magn ] 
+06. INPUT.springs		          : [ ID_node component magn ]
+07. INPUT.EA			          : function
+08. INPUT.solution                : 'static' or 'eigenmodes'
+09. INPUT.mod                     : selected vibration mode 
+10. INPUT.mass                    : [ ID_node component magn]
 
 -------------------
-1. INPUT.elements contains:
+01. INPUT.elements contains:
 	- the 2 nodes where your elements are collocated (e.g. if your element 1
           is between node 2 and 3, you'll set node_A=2 and node_B=3);
 
 	- the ID_prop is a number between 1 or 2. 1 identifies a truss element and
 	  2 a beam element;
 
-	- ID_material can vary from 1 up to a number N, depending on how many different
+	- ID_material can vary from 0 up to a number N, depending on how many different
 	  materials (different E,A,J) are present in your structure.
+	  Set this parameter to 0 if you want to specify variable properties along its 
+	  length (see INPUT.EA for more informations)
 
 Each row of the INPUT.elements matrix represents a different element.
 
 -------------------
-2. INPUT.nodes is made up of:
+02. INPUT.nodes is made up of:
 	- ID_node, which is the number that you used for the node on your sketch;
 	
 	- x_coord, the x coordinate of the node;
@@ -64,7 +69,7 @@ Each row of the INPUT.elements matrix represents a different element.
 Each row of the INPUT.nodes matrix represents a different node.
 
 -------------------
-3. INPUT.section_prop is the matrix containing the elastic properties of a material:
+03. INPUT.section_prop is the matrix containing the elastic properties of a material:
 	- E*A is the product of the Young modulus and the Section of the element;
 
 	- E*J is the product of the Young modulus and the inertia moment of the element; 
@@ -73,7 +78,66 @@ Each row of the INPUT.section_prop matrix represents a different material. The n
 of the row also represents the ID_material number in the INPUT.elements matrix.
 
 -------------------
-4. INPUT.mass specifies how the mass is lumped on the structure:
+04. INPUT.load specifies which nodes have a concentrated load on them, and which d.o.f
+   it is applied to:
+	- ID_node is the number of the node where the concentrated load is located;
+
+	- component is the number which indicates the d.o.f where the load is applied
+	  (from 1 to 3);
+
+	- magn is the magnitude of the load;
+
+This vector may contain as many values as you want, even for a fixed number of nodes.
+If no load is applied on the structure, leave this vector's brackets empty.
+NOTE: if your load is a distribute one, first use the Integrate_NS function to retrieve
+the components of the load vector on that specific element and then insert the single
+loads by hand in the input_model.m file.
+
+-------------------
+05. INPUT.spc is the matrix containing the boundary conditions (BCs) of the problem:
+	- ID_node is the number of the node where the constrain is located;
+	
+	- component specifies which d.o.f. of the node is constrained
+	  (number from 1 to 3);
+
+	- magn imposes a specific displacement to the constrained d.o.f.
+          which will be used to plot the deformed shape of the structure.
+
+NOTE: for a normal constrain set the magn parameter to 0. Also, be careful with writing the 
+right BCs. See example #2 to understand more.
+
+-------------------
+06. INPUT.springs contains informations on the concentrated spring present in the structure:
+	- ID_node is the number of the node where the spring is located;
+	
+	- component specifies which d.o.f. of the node is constrained
+	  (number from 1 to 3, where 3 is for torsional springs);
+
+	- magn specifies the value of the stiffness of the concentrated spring.
+
+This vector may contain as many values as you want, even for a fixed number of nodes.
+
+-------------------
+07. INPUT.EA is only used if one or more of the elements have variable properties along its
+length:
+	- define the anonymous function for the variable properties.
+
+NOTE: as for now, you will only be capable of specifying variable properties of ONE KIND. 
+This means that the program cannot solve structural problems with different EA functions,
+since only one at a time can be used. Anyways, you can use the same function for more than
+one element.
+
+-------------------
+08. INPUT.solution specifies if the dynamic problem will be solved or not:
+	- write 'eigenmodes' to solve the dynamic problem too;
+	
+	- write 'static' to solve only the static problem;
+
+-------------------
+09. INPUT.mode is the number indicating the vibration mode you want to compute.
+
+-------------------
+10. INPUT.mass specifies how the mass is lumped on the structure:
 	- ID_node is the number of the node where the mass is located;
 
 	- component indicates which degree of freedom associated to the node 
@@ -86,46 +150,13 @@ NOTE: in this algorithm only one value for the mass can be used and every degree
       is built automatically by the program.
 
 -------------------
-5. INPUT.load specifies which nodes have a concentrated load on them, and which d.o.f
-   it is applied to:
-	- ID_node is the number of the node where the concentrated load is located;
-
-	- component is the number which indicates the d.o.f where the load is applied
-	  (from 1 to 3);
-
-	- magn is the magnitude of the load;
-
-This vector may contain as many values as you want, even for a fixed number of nodes.
-
--------------------
-6. INPUT.solution specifies if the dynamic problem will be solved or not:
-	- write 'eigenmodes' to solve the dynamic problem too;
-	
-	- write 'static' to solve only the static problem;
-
--------------------
-7. INPUT.mode is the number indicating the vibration mode you want to compute.
-	
--------------------
-8. INPUT.spc is the matrix containing the boundary conditions of the problem:
-	- ID_node is the number of the node where the constrain is located;
-	
-	- component specifies which d.o.f. of the node is constrained
-	  (number from 1 to 3)
-
-	- magn imposes a specific displacement to the constrained d.o.f.
-          which will be used to plot the deformed shape of the structure.
-
-NOTE: for a normal constrain set the magn parameter to 0.
-
--------------------
 Here are reported the expected dimensions for each part of the 3 main structs composing the 
 problem, which are set up by the set_model.m Matlab function:
 
-----------------------------------------ELEMENTS-------------------------------------------------------------------------
+----------------------------------------ELEMENTS----------------------------------------------------------------------------
                               [1 × nels] struct array with fields:
 % nodes                                 ID of nodes composing the element 		[1 x 2 double]
-% EA                                    axial stiffness 				[1 x 1 double]
+% EA                                    axial stiffness 				[1 x 1 double] / anonymous function
 % EJ                                    bending stiffness				[1 x 1 double]
 % type                                  'truss' or 'beam'				[char]
 % dofs                                  number of element dofs (4: truss; 6: beams)	[1 x 1 double]
@@ -137,27 +168,27 @@ problem, which are set up by the set_model.m Matlab function:
 % T                                     element transformation matrix			[2(truss)/6(beam) x 4/6 double]	
 % nodal_forces                          element nodal forces				[2(truss)/6(beam) x 1 double]	
 
-----------------------------------------NODES----------------------------------------------------------------------------
+----------------------------------------NODES-------------------------------------------------------------------------------
                             [1 × nnodes] struct array with fields:
 % coord_x                               node x coordinate				[1 x 1 double]
 % coord_y                               node y coordinate				[1 x 1 double]
 % ass_dof                               dofs associated to the node			[1 x 2(truss)/3(beam) double]
 
-----------------------------------------MODEL-----------------------------------------------------------------------------
+----------------------------------------MODEL-------------------------------------------------------------------------------
                                  struct with fields:
 % ndof                                  tot number of dofs for the unconstr system	[1 x 1 double]
 % nels                                  total number of elements			[1 x 1 double]
 % nnodes                                total number of nodes				[1 x 1 double]
-% K: 					stiffness matrix of constr structure 		[nfree_dofs × nfree_dofs double]
-% F: 			                load vector of constr structure			[nfree_dofs × 1 double]
+% K: 					                stiffness matrix of constr structure 		[nfree_dofs × nfree_dofs double]
+% F: 			                        load vector of constr structure			[nfree_dofs × 1 double]
 % constr_dofs                           vector of constrained dofs			[1 x nconstr_dofs double]
 % free_dofs                             vector of free dofs				[1 x nfree_dofs double]
-% nfree_dofs			        number of free dofs				[1 x 1 double]
-% K_unc: 		                stiffness matrix of unconstr structure		[ndof × ndof] 
-% F_unc: 		                load vector of unconstr struct			[ndof × 1 double]
-% U: 			                displacement vector (only free dofs)		[nfree_dofs × 1 double]
-% U_unc: 		                displacement vector (all dofs)			[ndof × 1 double]
-% M: 			                mass matrix					[ndof x ndof double]
+% nfree_dofs			                number of free dofs				[1 x 1 double]
+% K_unc: 		                        stiffness matrix of unconstr structure		[ndof × ndof] 
+% F_unc: 		                        load vector of unconstr struct			[ndof × 1 double]
+% U: 			                        displacement vector (only free dofs)		[nfree_dofs × 1 double]
+% U_unc: 		                        displacement vector (all dofs)			[ndof × 1 double]
+% M: 			                        mass matrix					[ndof x ndof double]
 
 NOTE: M will not appear if INPUT.solution is set to 'static'.
 NOTE: the MODEL struct will have 4 fields more once the program is terminated:  
@@ -173,7 +204,7 @@ NOTE: the MODEL struct will have 4 fields more once the program is terminated:
 			       composing MODEL.U, with exception of the rotational ones. '...' depends on the dofs used
 			       and is usually: (nfree_dofs - num_remaining_rotational_dofs) 
 						
----------------------------------------- EXAMPLE OF INPUT SET UP-------------------------------------------------------
+---------------------------------------- EXAMPLE OF INPUT SET UP #1---------------------------------------------------------
 
 This example contains the F.E. model of a bridge. To modify the scale of the displacements and the vibration modes 
 figures open the "plot_..." .m files and change the n_visual parameter. 
@@ -210,11 +241,36 @@ INPUT.nodes = [ 1   0         0
 
 % -- Section properties
 E = 2;                            % [MPa]
-A = 1000;                            % [mm^2]
+A = 1000;                         % [mm^2]
 J = 1000;
 INPUT.section_prop = [ E*A E*J 
                        2*E*A 2*E*J ];
 
+
+
+% -- Loading conditions
+INPUT.load = [  4 2 -35
+                6 2 -35
+                8 2 -35];
+
+% -- Boundary conditions
+INPUT.spc = [ 1 1 0
+              1 2 -50
+              2 1 0
+              2 2 -50]; 
+
+% --- Concentrated springs
+INPUT.springs = [ ];
+
+% --- Parameters varying with section (EA/EJ functions of x)
+INPUT.EA = @(x) 0*x;
+
+% --- type of solution
+INPUT.solution = 'eigenmodes';
+
+% --- Vibration mode
+INPUT.mode = 3;
+        
 % -- Lumped mass on each node
 m = 1e-4;                    % [t]
 [N,M] = size(INPUT.nodes);
@@ -228,20 +284,65 @@ for i = 1 : 3 * N
     k=k+1;
 end
 
+---------------------------------------- EXAMPLE OF INPUT SET UP #2---------------------------------------------------------
+
+This example contains the F.E. model of a simple 2-truss structure. Here, the new features for concentrated springs and 
+for varying properties are tested. 
+
+NOTE: it is important to specify the right boundary conditions, for example, in this case (image attached to the FEM_setup.txt file) the structure could have rigid motion in the vertical direction. This would get a singular matrix. In order to eliminate this problem, all the nodes where constrained vertically. Also, there is no reason why the structure should move vertically due to an horizontal prescribed displacement.
+
+% -- Init
+INPUT = struct();
+
+% -- Elements
+INPUT.elements = [ 1 2 1 0
+                   2 3 1 1];
+
+% -- Nodes
+INPUT.nodes = [ 1 0    0
+                2 750  0
+                3 1500 0 ];
+
+
+% -- Section properties
+INPUT.section_prop = [ 3e6 0 ]; 
+
+
 % -- Loading conditions
-INPUT.load = [  4 2 -35
-                6 2 -35
-                8 2 -35];
+INPUT.load = [ ];
 
-% --- type of solution
-INPUT.solution = 'eigenmodes';
-
-% --- Vibration mode
-INPUT.mode = 3;
 
 % -- Boundary conditions
-INPUT.spc = [ 1 1 0
-              1 2 -50
-              2 1 0
-              2 2 -50];         
-          
+INPUT.spc = [ 1 2 0
+              2 1 5
+              2 2 0
+              3 2 0];   
+
+% --- Concentrated springs
+INPUT.springs = [ 1 1 8e3
+                  3 1 4e3];
+
+% --- Parameters varying with section (EA/EJ functions of x)
+EA1 = 5e6;
+EA2 = 2e6;
+l   = 750; 
+INPUT.EA = @(x) (EA2-EA1)*x/l + EA1;
+        
+% --- type of solution
+INPUT.solution = 'static';
+
+% --- Vibration mode
+INPUT.mode = 0;
+
+% -- Lumped mass on each node
+m = 0;                            % [tons]
+[N,M] = size(INPUT.nodes);
+for i = 1 : 3 * N
+    if i == 1 | k == 4
+        k=1;
+    end
+    INPUT.mass(i,1) = i;
+    INPUT.mass(i,2) = k;
+    INPUT.mass(i,3) = m;
+    k=k+1;
+end

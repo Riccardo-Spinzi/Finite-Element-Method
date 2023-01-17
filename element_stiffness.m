@@ -20,17 +20,6 @@ function ELEMENTS = element_stiffness( ELEMENTS, NODES, n_els )
 % ELEMENTS            [struct]      vector of structs containing      
 %                                   the ELEMENTS of the structure   [multi]
 % -------------------------------------------------------------------------
-  
-% --- Check the type of the elements
-truss = 0;
-beam = 0;
-for i = 1 : n_els
-    if strcmp(ELEMENTS(i).type,'truss') == 1
-        truss = 1;
-    elseif strcmp(ELEMENTS(i).type,'beam') == 1
-        beam = 1;
-    end
-end
 
 for i = 1 : n_els
     el_nodes = ELEMENTS(i).nodes;
@@ -49,18 +38,14 @@ for i = 1 : n_els
         % Transformation matrix
         T = [c s 0 0; 0 0 c s];
         
-        switch (truss - beam)
-            case 1
-                % pure truss case
-                % Properties and stiffness matrix
-                EA = ELEMENTS(i).EA;
-                ELEMENTS(i).K_el_loc = EA/l*[1 -1; -1 1];
-            case 0 
-                % mixed truss and beams case
-                EA = ELEMENTS(i).EA;
-                EJ = ELEMENTS(i). EJ;
-                alpha = (2 * EA) / (l * EJ);
-                ELEMENTS(i).K_el_loc = EJ/2*[alpha -alpha; -alpha alpha];
+        if strcmp(ELEMENTS(i).param,'constant') == 1 
+            %Properties and stiffness matrix constant parameters
+            EA = ELEMENTS(i).EA;
+            ELEMENTS(i).K_el_loc = EA/l*[1 -1; -1 1];
+        else
+            % Properties and stiffness matrix varying with x
+            EA =@(x) ELEMENTS(i).EA(x);
+            ELEMENTS(i).K_el_loc = 1/l^2*[1 -1; -1 1]* integral(@(x) EA(x),0,l);
         end
     elseif strcmp( ELEMENTS(i).type, 'beam') == 1
 

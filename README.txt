@@ -18,11 +18,17 @@ Implemented features:
 
 ~ Solve systems where some node displacements are imposed as boundary conditions;
 
-Future aims:
-
-~ Implement the possibility of having varying properties on one single element;
+~ Implement the possibility of having varying properties on one single element (only for TRUSS elements);
 
 ~ Model correctly the presence of concentrated springs as constraints with specific structural properties;
+
+Future aims:
+
+~ Implement a simpler code and refine the model with second order elements;
+
+~ Implement a way to compute the stiffness matrix with varying parameters for Euler-Bernoulli beam elements too;
+
+~ Implement a method to compute the discretization of continous loads on the structure automatically;
 
 Changelog:
 
@@ -36,13 +42,13 @@ Changelog:
 
 ----09-12 RELEASED v1.3 
 
-~	Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly;
+~ Corrected bugs where the vibration modes of a full-beam structure weren't displayed properly;
 
 ~ Implemented a generic method to evaluate matrices K and M for a mixed-elements structure;
 
 ~ Implemented a way to input more than one material properties (A,E,J) in the model;
  
- ----16-12 RELEASED v1.4
+----16-12 RELEASED v1.4
  
 ~ Implemented a method to evaluate imposed node displacements;
  
@@ -52,6 +58,14 @@ Changelog:
  
 ~ Added an example of input_model.m file at the bottom of the FEM_setup.txt file;
  
- 
- 
- 
+----17-01 RELEASED v1.5
+
+~ Corrected a bug where truss problems where not evaluated correctly;
+
+~ Added the possibility to model concentrated springs in the structure;
+
+~ Implemented the possibility of having varying properties ( EA(x) ) on one single element (only for TRUSS elements);
+
+~ Updated both FEM_setup.txt to show how to use the new implemented features;
+
+~ Added an auxiliary function called 'Integrate_NS' which is able to separate distributed loads in concentrated loads;

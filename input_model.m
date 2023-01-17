@@ -23,25 +23,39 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-INPUT.elements = [ 1 2 2 1
-                   2 3 2 2
-                   3 4 1 1];
+INPUT.elements = [ ];
 
 % -- Nodes
-INPUT.nodes = [ 1 0 1
-                2 1 1
-                3 3 1
-                4 3 0];
+INPUT.nodes = [  ];
 
 % -- Section properties
-E = 1;                               % [MPa]
-A = 1000;                            % [mm^2]
-J = 1000;
-INPUT.section_prop = [ 1000 1000
-                       1000 2000];
+E = ;                            % [MPa]
+A = ;                         % [mm^2]
+J = ;
+INPUT.section_prop = [ ];
 
+
+
+% -- Loading conditions
+INPUT.load = [  ];
+
+% -- Boundary conditions
+INPUT.spc = [ ]; 
+
+% --- Concentrated springs
+INPUT.springs = [ ];
+
+% --- Parameters varying with section (EA/EJ functions of x)
+INPUT.EA = @(x) 0*x;
+
+% --- type of solution
+INPUT.solution = 'eigenmodes';
+
+% --- Vibration mode
+INPUT.mode = ;
+        
 % -- Lumped mass on each node
-m = 0;                            % [tons]
+m = ;                    % [t]
 [N,M] = size(INPUT.nodes);
 for i = 1 : 3 * N
     if i == 1 | k == 4
@@ -52,25 +66,5 @@ for i = 1 : 3 * N
     INPUT.mass(i,3) = m;
     k=k+1;
 end
-
-% -- Loading conditions
-INPUT.load = [ 2 2 90];
-
-% --- type of solution
-INPUT.solution = 'static';
-
-% --- Vibration mode
-INPUT.mode = 0;
-
-% -- Boundary conditions
-INPUT.spc = [ 1 1 0
-              1 2 0
-              1 3 0
-              3 2 0.2
-              4 1 0
-              4 2 0
-              4 3 0];         
-          
-
 
 return

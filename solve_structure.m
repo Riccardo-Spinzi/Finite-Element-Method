@@ -41,6 +41,19 @@ MODEL.K( constr_dofs, : ) = [];
 MODEL.K( :, constr_dofs ) = [];
 MODEL.F( constr_dofs ) = [];
 
+% % Remove last columns and rows of zeros
+% gdl = []
+% if det(MODEL.K) == 0
+%     for i = 1 : length(MODEL.K)
+%         if MODEL.K(:,i) == zeros(length(MODEL.K),1)
+%             gdl = [gdl i];
+%         end
+%     end
+%     MODEL.K( :, gdl ) = [];
+%     MODEL.K( gdl, : ) = [];
+%     MODEL.F( gdl )    = [];
+% end
+
 % Solve problem
 MODEL.U = MODEL.K \ MODEL.F;    % [mm]
 

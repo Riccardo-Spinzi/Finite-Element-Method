@@ -33,13 +33,22 @@ MODEL = struct();
 [Q,P] = size (INPUT.nodes);
 [O,R] = size (INPUT.spc);
 [dim1,dim2] = size (INPUT.load);
+[dim3,dim4] = size (INPUT.springs);
 
 % --- define structure for ELEMENTS
 for i =  1 : N
     ELEMENTS(i).nodes = INPUT.elements(i,[1,2]);
-    ELEMENTS(i).EA = INPUT.section_prop(INPUT.elements(i,4),1); 
+    % control if E and A are constant or variable parameters
+    if INPUT.elements(i,4) ~= 0
+        ELEMENTS(i).EA = INPUT.section_prop(INPUT.elements(i,4),1); 
+        ELEMENTS(i).param = 'constant';
+    else
+        ELEMENTS(i).EA =@(x) INPUT.EA(x);
+        ELEMENTS(i).param = 'variable';
+    end
+    % get other useful parameters in the structure
     if INPUT.elements(i,3) == 1
-        ELEMENTS(i).EJ = INPUT.section_prop(INPUT.elements(i,4),2); 
+        ELEMENTS(i).EJ = 0; 
         ELEMENTS(i).type = 'truss';
         ELEMENTS(i).dofs = 4;      
     else
@@ -83,6 +92,14 @@ MODEL.nfree_dofs = length(MODEL.free_dofs);
 % initialize K and f
 MODEL.K = zeros(MODEL.ndof);
 MODEL.F = zeros(MODEL.ndof,1);
+
+% insert concentrated springs in K if there is any
+for i = 1 : dim3
+    if length(INPUT.springs) ~= 0
+        punt = (INPUT.springs(i,1)-1)*3 + INPUT.springs(i,2);
+        MODEL.K(punt,punt) = MODEL.K(punt,punt) + INPUT.springs(i,3);
+    end
+end
 
 % build force vector
 for i = 1 : dim1

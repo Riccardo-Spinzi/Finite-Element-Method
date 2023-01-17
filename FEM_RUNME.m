@@ -3,7 +3,7 @@ close all
 clc
 
 %% F.E. METHOD
-    
+
 % --- 1. Pre-process
 INPUT = input_model;
 

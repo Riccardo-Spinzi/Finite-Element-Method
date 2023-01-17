@@ -42,7 +42,7 @@ for i = 1 : N
     plot_y_nod_2 = NODES(nod_2).coord_y;
     
     % nodes plot
-    plot([plot_x_nod_1,plot_x_nod_2],[plot_y_nod_1,plot_y_nod_2],'--b')
+    plot([plot_x_nod_1,plot_x_nod_2],[plot_y_nod_1,plot_y_nod_2],'--b','LineWidth',2)
 
     % nodes coordinates with calculated displacement 
     plot_x_nod_1 = NODES(nod_1).coord_x + U_new(nod_1,1);
