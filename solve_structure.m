@@ -17,7 +17,7 @@ function MODEL = solve_structure( MODEL )
 %                                   for the MODEL of the structure  [multi]
 % -------------------------------------------------------------------------
 
-constr_dofs = [MODEL.constr_dofs MODEL.pointer];
+constr_dofs = sort([MODEL.constr_dofs MODEL.pointer]);
 
 for i = 1 : length(MODEL.pointer)
     Idx_null = MODEL.free_dofs == MODEL.pointer(i); % finding X indices corresponding to pointer elements
