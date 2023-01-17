@@ -69,3 +69,6 @@ Changelog:
 ~ Updated both FEM_setup.txt to show how to use the new implemented features;
 
 ~ Added an auxiliary function called 'Integrate_NS' which is able to separate distributed loads in concentrated loads;
+
+~ Added example #2 in the FEM_setup.txt file.
+
