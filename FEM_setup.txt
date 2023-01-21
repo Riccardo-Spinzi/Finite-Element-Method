@@ -27,9 +27,9 @@ You can find any update to my F.E.M. algorithm on:
 	algorithm.
 	Note that to get displacements in millimiters, you should give
 	inputs using N and mm as units of measure.
-	The program takes as input constraints in the absolute frame of 
-	reference, so input them looking at the structure and not to the 
-	single elements.	
+	The program takes as input the constraints in the absolute frame 
+	of reference, so input them looking at the structure and not to 
+	the single elements.	
 
 ----------------------------------INTRODUCTION---------------------------------------------
 
