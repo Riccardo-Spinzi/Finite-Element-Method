@@ -24,6 +24,8 @@ Implemented features:
 
 Future aims:
 
+~ Develop a Matlab script to study the behaviour of Non-linear strcutures;
+
 ~ Implement a simpler code and refine the model with second order elements;
 
 ~ Implement a way to compute the stiffness matrix with varying parameters for Euler-Bernoulli beam elements too;
@@ -70,5 +72,7 @@ Changelog:
 
 ~ Added an auxiliary function called 'Integrate_NS' which is able to separate distributed loads in concentrated loads;
 
-~ Added example #2 in the FEM_setup.txt file.
+~ Added example #2 in the FEM_setup.txt file;
+
+~ Project concluded -> Future aims shifted to next project.
 
