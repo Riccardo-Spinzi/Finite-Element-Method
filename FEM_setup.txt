@@ -40,8 +40,8 @@ First, let's introduce the input_model parameters that you'll need to set:
 03. INPUT.section_prop            : [ E*A E*J ]                            
 04. INPUT.load                    : [ ID_node component magn ]
 05. INPUT.spc                     : [ ID_node component magn ] 
-06. INPUT.springs		          : [ ID_node component magn ]
-07. INPUT.EA			          : function
+06. INPUT.springs		  : [ ID_node component magn ]
+07. INPUT.EA			  : function
 08. INPUT.solution                : 'static' or 'eigenmodes'
 09. INPUT.mod                     : selected vibration mode 
 10. INPUT.mass                    : [ ID_node component magn]
@@ -57,7 +57,7 @@ First, let's introduce the input_model parameters that you'll need to set:
 	- ID_material can vary from 0 up to a number N, depending on how many different
 	  materials (different E,A,J) are present in your structure.
 	  Set this parameter to 0 if you want to specify variable properties along its 
-	  length (see INPUT.EA for more informations)
+	  length (see INPUT.EA for more informations).
 
 Each row of the INPUT.elements matrix represents a different element.
 
@@ -67,7 +67,7 @@ Each row of the INPUT.elements matrix represents a different element.
 	
 	- x_coord, the x coordinate of the node;
 
-	- y_coord, the y coordinate of the node;
+	- y_coord, the y coordinate of the node.
 
 Each row of the INPUT.nodes matrix represents a different node.
 
@@ -75,7 +75,7 @@ Each row of the INPUT.nodes matrix represents a different node.
 03. INPUT.section_prop is the matrix containing the elastic properties of a material:
 	- E*A is the product of the Young modulus and the Section of the element;
 
-	- E*J is the product of the Young modulus and the inertia moment of the element; 
+	- E*J is the product of the Young modulus and the inertia moment of the element.
 
 Each row of the INPUT.section_prop matrix represents a different material. The number
 of the row also represents the ID_material number in the INPUT.elements matrix.
@@ -88,7 +88,7 @@ of the row also represents the ID_material number in the INPUT.elements matrix.
 	- component is the number which indicates the d.o.f where the load is applied
 	  (from 1 to 3);
 
-	- magn is the magnitude of the load;
+	- magn is the magnitude of the load.
 
 This vector may contain as many values as you want, even for a fixed number of nodes.
 If no load is applied on the structure, leave this vector's brackets empty.
@@ -134,7 +134,7 @@ one element.
 08. INPUT.solution specifies if the dynamic problem will be solved or not:
 	- write 'eigenmodes' to solve the dynamic problem too;
 	
-	- write 'static' to solve only the static problem;
+	- write 'static' to solve only the static problem.
 
 -------------------
 09. INPUT.mode is the number indicating the vibration mode you want to compute.
@@ -146,7 +146,7 @@ one element.
 	- component indicates which degree of freedom associated to the node 
  	  contains the mass (from 1 to 3);
 	
-	- magn is the actual value of the mass;
+	- magn is the actual value of the mass.
 
 NOTE: in this algorithm only one value for the mass can be used and every degree of 
       freedom will have associated that value of mass. Infact the INPUT.mass matrix
@@ -182,16 +182,16 @@ problem, which are set up by the set_model.m Matlab function:
 % ndof                                  tot number of dofs for the unconstr system	[1 x 1 double]
 % nels                                  total number of elements			[1 x 1 double]
 % nnodes                                total number of nodes				[1 x 1 double]
-% K: 					                stiffness matrix of constr structure 		[nfree_dofs × nfree_dofs double]
-% F: 			                        load vector of constr structure			[nfree_dofs × 1 double]
+% K: 					stiffness matrix of constr structure 		[nfree_dofs × nfree_dofs double]
+% F: 			                load vector of constr structure			[nfree_dofs × 1 double]
 % constr_dofs                           vector of constrained dofs			[1 x nconstr_dofs double]
 % free_dofs                             vector of free dofs				[1 x nfree_dofs double]
-% nfree_dofs			                number of free dofs				[1 x 1 double]
-% K_unc: 		                        stiffness matrix of unconstr structure		[ndof × ndof] 
-% F_unc: 		                        load vector of unconstr struct			[ndof × 1 double]
-% U: 			                        displacement vector (only free dofs)		[nfree_dofs × 1 double]
-% U_unc: 		                        displacement vector (all dofs)			[ndof × 1 double]
-% M: 			                        mass matrix					[ndof x ndof double]
+% nfree_dofs			        number of free dofs				[1 x 1 double]
+% K_unc: 		                stiffness matrix of unconstr structure		[ndof × ndof] 
+% F_unc: 		                load vector of unconstr struct			[ndof × 1 double]
+% U: 			                displacement vector (only free dofs)		[nfree_dofs × 1 double]
+% U_unc: 		                displacement vector (all dofs)			[ndof × 1 double]
+% M: 			                mass matrix					[ndof x ndof double]
 
 NOTE: M will not appear if INPUT.solution is set to 'static'.
 NOTE: the MODEL struct will have 4 fields more once the program is terminated:  
