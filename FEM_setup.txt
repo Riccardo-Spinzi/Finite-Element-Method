@@ -292,7 +292,10 @@ end
 This example contains the F.E. model of a simple 2-truss structure. Here, the new features for concentrated springs and 
 for varying properties are tested. 
 
-NOTE: it is important to specify the right boundary conditions, for example, in this case (image attached to the FEM_setup.txt file) the structure could have rigid motion in the vertical direction. This would get a singular matrix. In order to eliminate this problem, all the nodes where constrained vertically. Also, there is no reason why the structure should move vertically due to an horizontal prescribed displacement.
+NOTE: it is important to specify the right boundary conditions, for example, in this case (image attached to the FEM_setup.txt file)
+the structure could have rigid motion in the vertical direction. This would get a singular matrix. In order to eliminate this problem,
+all the nodes where constrained vertically. Also, there is no reason why the structure should move vertically due to an horizontal 
+prescribed displacement.
 
 % -- Init
 INPUT = struct();
