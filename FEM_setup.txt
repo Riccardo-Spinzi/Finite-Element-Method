@@ -5,7 +5,7 @@
 In this file you'll find how to set up the input_model.m file in order to solve the 
 structural problem and plot the deformed shape and the vibration modes of the structure.
 
-if you find any bug please contact me: 
+If you find any bug please contact me: 
 	
 				Riccardo.spinzi@gmail.com
 
