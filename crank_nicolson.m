@@ -49,7 +49,5 @@ for i = 1 : length(t) - 1
     sol(:,i+1) =  M_LHS \ c;
 end
 
-MODEL.U_time = sol;
-
 return
 

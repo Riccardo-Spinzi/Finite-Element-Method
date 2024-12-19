@@ -19,7 +19,7 @@ function plot_deformed_shapes( MODEL, ELEMENTS, NODES )
 %
 % -------------------------------------------------------------------------
 
-[M,N] = size(ELEMENTS);
+[~,N] = size(ELEMENTS);
 
 % re-scale the displacements to see them better in the plots
 n_visual = 1;

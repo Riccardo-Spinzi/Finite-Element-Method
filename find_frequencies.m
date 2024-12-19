@@ -18,7 +18,7 @@ function MODEL = find_frequencies( MODEL, mode )
 %                                   for the MODEL of the structure  [multi]
 % -------------------------------------------------------------------------
 
-M = MODEL.M;
+M = MODEL.M_unc;
 K = MODEL.K_unc;
 
 % the dofs associated to constrains, rotations, and the unused ones will be

@@ -26,8 +26,6 @@ end
 
 % Store unconstrained M, K and F
 MODEL.M_unc = MODEL.M;
-MODEL.K_unc = MODEL.K;
-MODEL.F_unc = MODEL.F;
 
 % if a prescribed displacement is introduced K and F are modified accordingly 
 if sum(abs(MODEL.U_bar)) > 0
@@ -45,10 +43,11 @@ MODEL.F_dyn( constr_dofs, :  ) = [];
 % Solve problem
 sol = crank_nicolson( MODEL );    % [mm]
 
-MODEL.U_time = sol(1:MODEL.nfree_dofs);
+MODEL.U_time = sol(1:MODEL.nfree_dofs, :);
+
 % Expand displacements to the global vector
-MODEL.U_unc_time = zeros( MODEL.ndof, length(MODEL,time_vector));
-MODEL.U_unc_time( MODEL.free_dofs, : ) = MODEL.U_time (1:MODEL.ndof, :);
+MODEL.U_unc_time = zeros( MODEL.ndof, length(MODEL.time_vector));
+MODEL.U_unc_time( MODEL.free_dofs, : ) = MODEL.U_time;
 MODEL.U_unc_time = MODEL.U_unc_time + MODEL.U_bar;
 
 return
