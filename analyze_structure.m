@@ -33,15 +33,21 @@ ELEMENTS = set_pointers( ELEMENTS, NODES, MODEL.nels );
 % --- Build element stiffness matrices
 ELEMENTS = element_stiffness( ELEMENTS, NODES, MODEL.nels );
 
-% --- Assembly stiffness matrix
-MODEL = assembly_stiffness( ELEMENTS, MODEL );
+% --- Build element mass matrices
+ELEMENTS = element_mass( ELEMENTS, MODEL.nels );
 
-% --- Impose constraints and solve
-MODEL = solve_structure( MODEL );
+% --- Assembly mass and stiffness matrices
+MODEL = assembly_matrices( ELEMENTS, MODEL );
+
+% --- Impose constraints and solve static problem
+MODEL = solve_structure_static( MODEL );
+
+% --- Solve dynamic problem
+MODEL = solve_structure_dynamic( MODEL );
 
 % --- Calculate natural frequencies and vibration modes
 if strcmp(INPUT.solution,'eigenmodes') == 1
-    MODEL = solve_dynamics( MODEL, INPUT.mode );
+    MODEL = find_frequencies( MODEL, INPUT.mode );
 else 
       MODEL.vib_mode = 0;
       MODEL.w_i = 0;

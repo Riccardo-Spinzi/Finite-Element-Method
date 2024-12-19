@@ -29,15 +29,17 @@ NODES = struct();
 MODEL = struct();
 
 % --- useful dimension parameters 
-[N,M] = size (INPUT.elements);
-[Q,P] = size (INPUT.nodes);
-[O,R] = size (INPUT.spc);
-[dim1,dim2] = size (INPUT.load);
-[dim3,dim4] = size (INPUT.springs);
+[N,~] = size (INPUT.elements);
+[Q,~] = size (INPUT.nodes);
+[O,~] = size (INPUT.spc);
+[dim1,~] = size (INPUT.load);
+[dim3,~] = size (INPUT.springs);
 
 % --- define structure for ELEMENTS
 for i =  1 : N
     ELEMENTS(i).nodes = INPUT.elements(i,[1,2]);
+    ELEMENTS(i).A = INPUT.A;
+    ELEMENTS(i).rho = INPUT.rho;
     % control if E and A are constant or variable parameters
     if INPUT.elements(i,4) ~= 0
         ELEMENTS(i).EA = INPUT.section_prop(INPUT.elements(i,4),1); 
@@ -63,7 +65,7 @@ end
 for i = 1 : Q
     NODES(i).coord_x = INPUT.nodes(i,2);
     NODES(i).coord_y = INPUT.nodes(i,3);  
-    NODES(i).ass_dof = (i-1)*3 + [1:3];
+    NODES(i).ass_dof = (i-1)*3 + (1:3);
 end
 
 % --- define structure for MODEL
@@ -75,7 +77,7 @@ MODEL.ndof = 0;
 % set the number of dofs as if the elements were all beams
 MODEL.ndof = MODEL.nnods * 3; 
 
-MODEL.free_dofs = [1:MODEL.ndof];
+MODEL.free_dofs = 1:MODEL.ndof;
 
 for i = 1 : O
    MODEL.constr_dofs(i) = (INPUT.spc(i,1)-1)*MODEL.ndof/MODEL.nnods +  INPUT.spc(i,2); 
@@ -89,22 +91,21 @@ Idx_null = MODEL.free_dofs == 0; % finding X indices corresponding to 0 elements
 MODEL.free_dofs(Idx_null) = [];  % removing elements using [] operator
 MODEL.nfree_dofs = length(MODEL.free_dofs);
 
-% initialize K and f
+% get time vector for time integration
+MODEL.time_vector = INPUT.time;
+
+% initialize M, K and f
+MODEL.M = zeros(MODEL.ndof);
 MODEL.K = zeros(MODEL.ndof);
 MODEL.F = zeros(MODEL.ndof,1);
+MODEL.F_dyn = zeros (MODEL.ndof, length(MODEL.time_vector));
 
 % insert concentrated springs in K if there is any
 for i = 1 : dim3
-    if length(INPUT.springs) ~= 0
+    if ~isempty(INPUT.springs)
         punt = (INPUT.springs(i,1)-1)*3 + INPUT.springs(i,2);
         MODEL.K(punt,punt) = MODEL.K(punt,punt) + INPUT.springs(i,3);
     end
-end
-
-% build force vector
-for i = 1 : dim1
-   punt = (INPUT.load(i,1)-1)*3 + INPUT.load(i,2);
-   MODEL.F(punt) = INPUT.load(i,3);
 end
 
 MODEL.U_bar = zeros(MODEL.ndof,1);
@@ -114,11 +115,20 @@ for i = 1 : O
    MODEL.U_bar(punt,1) = INPUT.spc(i,3); 
 end
 
+% build force vector (static and dynamic)
+for i = 1 : dim1
+   punt = (INPUT.load(i,1)-1)*3 + INPUT.load(i,2);
+   MODEL.F(punt) = INPUT.load(i,3);
+   MODEL.F_dyn(punt,:) = INPUT.load(i,3)*cos(2*pi*1*MODEL.time_vector); % 1 Hz oscillation
+end
+
+% get vector of initial conditions
+MODEL.IC = zeros(2*MODEL.nfree_dofs,1);
+
 % --- define useful parameters for dynamics
 if strcmp(INPUT.solution,'eigenmodes') == 1
-    MODEL = assembly_mass( MODEL, INPUT.mass(:,3));
     MODEL.vib_mode = zeros(MODEL.ndof,1);
-    if length(INPUT.mode)>1
+    if length(INPUT.mode) > 1
         error('only one mode at a time can be computed')
     end
     MODEL.mode_num = INPUT.mode;

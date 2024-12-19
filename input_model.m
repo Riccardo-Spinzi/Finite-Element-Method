@@ -23,24 +23,51 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-INPUT.elements = [ ];
+INPUT.elements = [  1 4 2 2
+                    1 3 2 1
+                    3 4 2 2
+                    3 6 2 2
+                    4 5 2 2
+                    4 6 2 2
+                    3 5 2 1
+                    5 6 2 2
+                    5 8 2 2
+                    6 7 2 2
+                    6 8 2 2
+                    5 7 2 1
+                    7 8 2 2
+                    8 2 2 2
+                    7 2 2 1];
 
 % -- Nodes
-INPUT.nodes = [  ];
+INPUT.nodes = [ 1   0         0
+                2   10160     0
+                3   2540      0
+                4   2540      3810
+                5   5080      0
+                6   5080      5080
+                7   7620      0
+                8   7620      3810 ];
 
 % -- Section properties
-E = ;                            % [MPa]
-A = ;                         % [mm^2]
-J = ;
-INPUT.section_prop = [ ];
+INPUT.E = 2;                            % [MPa]
+INPUT.A = 1000;                         % [mm^2]
+INPUT.J = 1000;
+INPUT.section_prop = [ INPUT.E*INPUT.A INPUT.E*INPUT.J 
+                       2*INPUT.E*INPUT.A 2*INPUT.E*INPUT.J ];
 
 
 
 % -- Loading conditions
-INPUT.load = [  ];
+INPUT.load = [  4 2 -35
+                6 2 -35
+                8 2 -35];
 
 % -- Boundary conditions
-INPUT.spc = [ ]; 
+INPUT.spc = [ 1 1 0
+              1 2 -50
+              2 1 0
+              2 2 -50]; 
 
 % --- Concentrated springs
 INPUT.springs = [ ];
@@ -52,19 +79,14 @@ INPUT.EA = @(x) 0*x;
 INPUT.solution = 'eigenmodes';
 
 % --- Vibration mode
-INPUT.mode = ;
+INPUT.mode = 3;
         
-% -- Lumped mass on each node
-m = ;                    % [t]
-[N,M] = size(INPUT.nodes);
-for i = 1 : 3 * N
-    if i == 1 | k == 4
-        k=1;
-    end
-    INPUT.mass(i,1) = i;
-    INPUT.mass(i,2) = k;
-    INPUT.mass(i,3) = m;
-    k=k+1;
-end
+% -- Density of each element
+INPUT.rho = 2.7;             % [kg/m^3]
+
+% -- Time integration vector
+tfin = 1;                                   % [s] Final integration time
+N_steps = 1000;                             % [-] Number of time steps
+INPUT.time = linspace(0, tfin, N_steps);    % [s] Vector of times
 
 return
