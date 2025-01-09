@@ -34,19 +34,16 @@ coords = [(1:num)', nodes, zeros(num,1)];
 INPUT.nodes = coords;
 
 % -- Section properties
-% INPUT.E = 1;                         % [MPa]
-% INPUT.A = 1;                         % [mm^2]
-% INPUT.J = 1;
 INPUT.E = 72;                       % [MPa]
 INPUT.A = 5^2;                         % [mm^2]
 INPUT.J = 5^4/12;
 INPUT.section_prop = [ INPUT.E*INPUT.A INPUT.E*INPUT.J];
 
 
-% node_idx = find(coords(:,2) == 0.02);
+node_idx = find(coords(:,2) == 20);
 % -- Loading conditions
-% INPUT.load = [ node_idx 2 -0];
-INPUT.load = [];
+INPUT.load = [ node_idx 2 -10];
+% INPUT.load = [];
 
 % -- Boundary conditions
 INPUT.spc = [ 1 1 0
@@ -67,12 +64,15 @@ INPUT.mode = 3;
         
 % -- Density of each element
 INPUT.rho = 2700e-9;             % [kg/mm^3]
-% INPUT.rho = 1;
+
+% -- Damping factor for lumped damping matrix
+INPUT.eta = 0.0005;
+% INPUT.eta = 0;
 
 % -- Time integration vector
-tfin = 1;                                   % [s] Final integration time
+tfin = 10;                                   % [s] Final integration time
 N_steps = 1000;                             % [-] Number of time steps
 INPUT.time = linspace(0, tfin, N_steps-1);    % [s] Vector of times
-INPUT.freq = 1;                             % [Hz] Force frequency of oscillation
-
+INPUT.freq = 0.1;                             % [Hz] Force frequency of oscillation
+INPUT.sine = false;
 return

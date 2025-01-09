@@ -34,10 +34,10 @@ xlabel("Time [s]")
 ylabel("Displacement [mm]")
 title("Evolution in time of displacement at x = IAP")
 
-figure
-plot(x, Z(1,:))
-grid on
-xlabel("Beam length [mm]")
-ylabel("Displacement [mm]")
-title("Displacement vs beam span")
+% figure
+% plot(x, Z(1,:))
+% grid on
+% xlabel("Beam length [mm]")
+% ylabel("Displacement [mm]")
+% title("Displacement vs beam span")
 

@@ -26,6 +26,7 @@ end
 
 % Store unconstrained M, K and F
 MODEL.M_unc = MODEL.M;
+MODEL.D_unc = MODEL.D;
 
 % if a prescribed displacement is introduced K and F are modified accordingly 
 if sum(abs(MODEL.U_bar)) > 0
@@ -38,6 +39,8 @@ end
 % Impose constraints (K already present from static)
 MODEL.M( constr_dofs, : ) = [];
 MODEL.M( :, constr_dofs ) = [];
+MODEL.D( constr_dofs, : ) = [];
+MODEL.D( :, constr_dofs ) = [];
 MODEL.F_dyn( constr_dofs, :  ) = [];
 MODEL.IC( constr_dofs, :  ) = [];
 

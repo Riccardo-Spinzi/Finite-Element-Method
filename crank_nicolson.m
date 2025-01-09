@@ -22,6 +22,7 @@ nfree_dofs  = MODEL.nfree_dofs;
 t = MODEL.time_vector;
 y0 = MODEL.IC;
 M = MODEL.M;
+D = MODEL.D;
 K = MODEL.K;
 F = MODEL.F_dyn;
 
@@ -31,7 +32,7 @@ dt = (t(end)-t(1))/(length(t)-1);
 % define useful matrices only once
 M_inv= M\eye(nfree_dofs);
 A = [zeros(nfree_dofs,nfree_dofs), eye(nfree_dofs);
-     - M_inv * K                   , zeros(nfree_dofs,nfree_dofs)];
+     - M_inv * K                   , - M_inv * D];
 b = [zeros(nfree_dofs,length(t));
      M_inv*F];
 M_LHS = eye(2*nfree_dofs) - dt/2 * A;

@@ -97,6 +97,7 @@ MODEL.time_vector = INPUT.time;
 % initialize M, K and f
 MODEL.M = zeros(MODEL.ndof);
 MODEL.K = zeros(MODEL.ndof);
+MODEL.D = zeros(MODEL.ndof);
 MODEL.F = zeros(MODEL.ndof,1);
 MODEL.F_dyn = zeros (MODEL.ndof, length(MODEL.time_vector));
 
@@ -124,9 +125,11 @@ end
 
 % get vector of initial conditions only on positions
 MODEL.IC = zeros(MODEL.ndof,1);
-x = [NODES.coord_x];
-MODEL.IC(2:3:MODEL.ndof-1) = MODEL.IC(2:3:MODEL.ndof-1)' + sin(pi*x/(x(end)-x(1)));
-MODEL.IC(3:3:MODEL.ndof) = MODEL.IC(3:3:MODEL.ndof)' + pi/(x(end)-x(1))*cos(pi*x/(x(end)-x(1)));
+if INPUT.sine == true
+    x = [NODES.coord_x];
+    MODEL.IC(2:3:MODEL.ndof-1) = MODEL.IC(2:3:MODEL.ndof-1)' + sin(pi*x/(x(end)-x(1)));
+    MODEL.IC(3:3:MODEL.ndof) = MODEL.IC(3:3:MODEL.ndof)' + pi/(x(end)-x(1))*cos(pi*x/(x(end)-x(1)));
+end 
 
 % --- define useful parameters for dynamics
 if strcmp(INPUT.solution,'eigenmodes') == 1
@@ -137,5 +140,7 @@ if strcmp(INPUT.solution,'eigenmodes') == 1
     MODEL.mode_num = INPUT.mode;
 end
 
+% get damping coefficient into the model struct
+MODEL.damping = INPUT.eta;
 
 return
