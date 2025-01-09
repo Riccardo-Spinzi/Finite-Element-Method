@@ -23,51 +23,35 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-INPUT.elements = [  1 4 2 2
-                    1 3 2 1
-                    3 4 2 2
-                    3 6 2 2
-                    4 5 2 2
-                    4 6 2 2
-                    3 5 2 1
-                    5 6 2 2
-                    5 8 2 2
-                    6 7 2 2
-                    6 8 2 2
-                    5 7 2 1
-                    7 8 2 2
-                    8 2 2 2
-                    7 2 2 1];
+N_mesh = 50;
+l = 100;        % [mm]
+INPUT.elements = [(1:N_mesh)',(2:N_mesh+1)',2*ones(N_mesh,1), ones(N_mesh,1)];
 
 % -- Nodes
-INPUT.nodes = [ 1   0         0
-                2   10160     0
-                3   2540      0
-                4   2540      3810
-                5   5080      0
-                6   5080      5080
-                7   7620      0
-                8   7620      3810 ];
+nodes = linspace(0,l,N_mesh+1)';
+num = length(nodes);
+coords = [(1:num)', nodes, zeros(num,1)];
+INPUT.nodes = coords;
 
 % -- Section properties
-INPUT.E = 2;                            % [MPa]
-INPUT.A = 1000;                         % [mm^2]
-INPUT.J = 1000;
-INPUT.section_prop = [ INPUT.E*INPUT.A INPUT.E*INPUT.J 
-                       2*INPUT.E*INPUT.A 2*INPUT.E*INPUT.J ];
+% INPUT.E = 1;                         % [MPa]
+% INPUT.A = 1;                         % [mm^2]
+% INPUT.J = 1;
+INPUT.E = 72;                       % [MPa]
+INPUT.A = 5^2;                         % [mm^2]
+INPUT.J = 5^4/12;
+INPUT.section_prop = [ INPUT.E*INPUT.A INPUT.E*INPUT.J];
 
 
-
+% node_idx = find(coords(:,2) == 0.02);
 % -- Loading conditions
-INPUT.load = [  4 2 -35
-                6 2 -35
-                8 2 -35];
+% INPUT.load = [ node_idx 2 -0];
+INPUT.load = [];
 
 % -- Boundary conditions
 INPUT.spc = [ 1 1 0
-              1 2 -50
-              2 1 0
-              2 2 -50]; 
+              1 2 0
+              INPUT.nodes(end,1) 2 0]; % look for last node automatically
 
 % --- Concentrated springs
 INPUT.springs = [ ];
@@ -82,11 +66,13 @@ INPUT.solution = 'eigenmodes';
 INPUT.mode = 3;
         
 % -- Density of each element
-INPUT.rho = 2.7;             % [kg/m^3]
+INPUT.rho = 2700e-9;             % [kg/mm^3]
+% INPUT.rho = 1;
 
 % -- Time integration vector
 tfin = 1;                                   % [s] Final integration time
 N_steps = 1000;                             % [-] Number of time steps
-INPUT.time = linspace(0, tfin, N_steps);    % [s] Vector of times
+INPUT.time = linspace(0, tfin, N_steps-1);    % [s] Vector of times
+INPUT.freq = 1;                             % [Hz] Force frequency of oscillation
 
 return

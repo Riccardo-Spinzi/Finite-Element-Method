@@ -119,11 +119,14 @@ end
 for i = 1 : dim1
    punt = (INPUT.load(i,1)-1)*3 + INPUT.load(i,2);
    MODEL.F(punt) = INPUT.load(i,3);
-   MODEL.F_dyn(punt,:) = INPUT.load(i,3)*cos(2*pi*1*MODEL.time_vector); % 1 Hz oscillation
+   MODEL.F_dyn(punt,:) = INPUT.load(i,3)*cos(2*pi*INPUT.freq*MODEL.time_vector); 
 end
 
-% get vector of initial conditions
-MODEL.IC = zeros(2*MODEL.nfree_dofs,1);
+% get vector of initial conditions only on positions
+MODEL.IC = zeros(MODEL.ndof,1);
+x = [NODES.coord_x];
+MODEL.IC(2:3:MODEL.ndof-1) = MODEL.IC(2:3:MODEL.ndof-1)' + sin(pi*x/(x(end)-x(1)));
+MODEL.IC(3:3:MODEL.ndof) = MODEL.IC(3:3:MODEL.ndof)' + pi/(x(end)-x(1))*cos(pi*x/(x(end)-x(1)));
 
 % --- define useful parameters for dynamics
 if strcmp(INPUT.solution,'eigenmodes') == 1

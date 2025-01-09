@@ -14,9 +14,12 @@ INPUT = input_model;
 ELEMENTS = force_recovery( MODEL, ELEMENTS );
 
 %--- 3.b  Post-process: plot deformed shapes
-plot_deformed_shapes( MODEL, ELEMENTS, NODES );
+% plot_deformed_shapes( MODEL, ELEMENTS, NODES );
 
 %--- 3.c  Post-process: plot vibration modes
-if strcmp(INPUT.solution,'eigenmodes') == 1
-    plot_vibration_mode( MODEL, ELEMENTS, NODES );
-end
+% if strcmp(INPUT.solution,'eigenmodes') == 1
+%     plot_vibration_mode( MODEL, ELEMENTS, NODES );
+% end
+
+%--- 3.d  Post-process: plot motion in time
+plot_dynamics( MODEL, NODES );

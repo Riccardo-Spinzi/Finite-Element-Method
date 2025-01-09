@@ -47,13 +47,13 @@ for i = 1 : n_els
 
         M_ab = [70    0       0;
                 0     54     -13*l;
-                0    -13*l   -3*l^2];
+                0    13*l   -3*l^2];
 
         M_bb = [ 140    0        0;
                  0      156     -22*l;
                  0     -22*l     4*l^2];
 
-        ELEMENTS(i).M_el_loc = rho*A*l/420 .* [M_aa M_ab; M_ab' M_bb];
+        ELEMENTS(i).M_el_loc = rho*A*l/420 * [M_aa M_ab; M_ab' M_bb];
     end
         % Rotate mass matrix
         ELEMENTS(i).M_el = T' * ELEMENTS(i).M_el_loc * T;

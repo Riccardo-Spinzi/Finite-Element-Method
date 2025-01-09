@@ -39,6 +39,7 @@ end
 MODEL.M( constr_dofs, : ) = [];
 MODEL.M( :, constr_dofs ) = [];
 MODEL.F_dyn( constr_dofs, :  ) = [];
+MODEL.IC( constr_dofs, :  ) = [];
 
 % Solve problem
 sol = crank_nicolson( MODEL );    % [mm]
