@@ -14,7 +14,7 @@ INPUT = input_model;
 ELEMENTS = force_recovery( MODEL, ELEMENTS );
 
 %--- 3.b  Post-process: plot deformed shapes
-% plot_deformed_shapes( MODEL, ELEMENTS, NODES );
+plot_deformed_shapes( MODEL, ELEMENTS, NODES );
 
 %--- 3.c  Post-process: plot vibration modes
 % if strcmp(INPUT.solution,'eigenmodes') == 1

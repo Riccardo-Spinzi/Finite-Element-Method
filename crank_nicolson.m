@@ -50,25 +50,5 @@ for i = 1 : length(t) - 1
     sol(:,i+1) =  M_LHS \ c;
 end
 
-%% provo a integrare in modo più facile, per evitare mal condizionamento
-
-% m_extended = [eye(nfree_dofs)               zeros(nfree_dofs,nfree_dofs); 
-%               zeros(nfree_dofs,nfree_dofs), M];
-% k_extended = [zeros(nfree_dofs,nfree_dofs), eye(nfree_dofs); 
-%               -K,                           zeros(nfree_dofs,nfree_dofs)];
-% f_extended = [zeros(nfree_dofs, length(t)); F];
-% 
-% M_LHS = m_extended - dt/2*k_extended;
-% M_RHS = m_extended + dt/2*k_extended;
-% 
-% for i = 1 : length(t) - 1
-%      c = M_RHS * sol(:,i) + dt/2 * (f_extended(:,i) + f_extended(:,i+1));
-%     sol(:,i+1) =  M_LHS \ c;
-% end
-
-%% provo ODE45
-
-% [~,sol] = ode23s(@(time,y) odefun(time,y,m_extended,k_extended,f_extended(:,1)),t,y0);
-
 return
 

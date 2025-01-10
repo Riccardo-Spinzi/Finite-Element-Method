@@ -73,6 +73,6 @@ INPUT.eta = 0.0005;
 tfin = 10;                                   % [s] Final integration time
 N_steps = 1000;                             % [-] Number of time steps
 INPUT.time = linspace(0, tfin, N_steps-1);    % [s] Vector of times
-INPUT.freq = 0.1;                             % [Hz] Force frequency of oscillation
+INPUT.freq = 1;                             % [Hz] Force frequency of oscillation
 INPUT.sine = false;
 return

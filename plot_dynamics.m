@@ -20,6 +20,7 @@ y = MODEL.time_vector;
 [X,Y] = meshgrid(x,y);
 Z = MODEL.U_unc_time(2:3:end,:)';
 
+figure
 surf(X,Y,Z,'EdgeColor', 'none')
 xlabel('beam axis [m]')
 ylabel('time [s]')
@@ -34,10 +35,4 @@ xlabel("Time [s]")
 ylabel("Displacement [mm]")
 title("Evolution in time of displacement at x = IAP")
 
-% figure
-% plot(x, Z(1,:))
-% grid on
-% xlabel("Beam length [mm]")
-% ylabel("Displacement [mm]")
-% title("Displacement vs beam span")
 
