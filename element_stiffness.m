@@ -61,16 +61,16 @@ for i = 1 : n_els
         EJ = ELEMENTS(i).EJ;
 
         K_aa = [ EA/l   0           0;
-                 0      12*EJ/l^3   -6*EJ/l^2;
-                 0      -6*EJ/l^2   4*EJ/l];
+                 0      12*EJ/l^3   6*EJ/l^2;
+                 0      6*EJ/l^2   4*EJ/l];
 
         K_ab = [-EA/l   0           0;
                 0       -12*EJ/l^3  -6*EJ/l^2;
                 0       6*EJ/l^2    2*EJ/l];
 
         K_bb = [EA/l 0           0;
-                0    12*EJ/l^3   6*EJ/l^2;
-                0    6*EJ/l^2    4*EJ/l];
+                0    12*EJ/l^3   -6*EJ/l^2;
+                0    -6*EJ/l^2    4*EJ/l];
 
         ELEMENTS(i).K_el_loc = [K_aa K_ab; K_ab' K_bb];
     end
