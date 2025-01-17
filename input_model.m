@@ -23,7 +23,7 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-N_mesh = 50;
+N_mesh = 1000;
 l = 100;        % [mm]
 INPUT.elements = [(1:N_mesh)',(2:N_mesh+1)',2*ones(N_mesh,1), ones(N_mesh,1)];
 
@@ -39,11 +39,9 @@ INPUT.A = 5^2;                         % [mm^2]
 INPUT.J = 5^4/12;
 INPUT.section_prop = [ INPUT.E*INPUT.A INPUT.E*INPUT.J];
 
-
-node_idx = find(coords(:,2) == 20);
 % -- Loading conditions
+node_idx = find(coords(:,2) == 20);
 INPUT.load = [ node_idx 2 -10];
-% INPUT.load = [];
 
 % -- Boundary conditions
 INPUT.spc = [ 1 1 0
@@ -66,8 +64,8 @@ INPUT.mode = 3;
 INPUT.rho = 2700e-9;             % [kg/mm^3]
 
 % -- Damping factor for lumped damping matrix
-INPUT.eta = 0.0005;
-% INPUT.eta = 0;
+% INPUT.eta = 0.05;
+INPUT.eta = 0;
 
 % -- Time integration vector
 tfin = 10;                                   % [s] Final integration time

@@ -33,8 +33,11 @@ for i = 1 : MODEL.nels
     MODEL.M( ptrs, ptrs ) = MODEL.M( ptrs, ptrs ) + M_el;
 end
 
-% assembly lumped damping matrix
-MODEL.D = eye(MODEL.ndof)*MODEL.damping;
+% % assembly lumped damping matrix
+% MODEL.D = eye(MODEL.ndof)*MODEL.damping;
+
+% assembly proportional (K) damping matrix
+MODEL.D = MODEL.K * MODEL.damping;
 
 % check if one pointer is not used (happens when a node is only connected
 % to truss elements)
