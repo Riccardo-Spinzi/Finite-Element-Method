@@ -23,7 +23,7 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-N_mesh = 1000;
+N_mesh = 50;
 l = 100;        % [mm]
 INPUT.elements = [(1:N_mesh)',(2:N_mesh+1)',2*ones(N_mesh,1), ones(N_mesh,1)];
 
@@ -64,8 +64,8 @@ INPUT.mode = 3;
 INPUT.rho = 2700e-9;             % [kg/mm^3]
 
 % -- Damping factor for lumped damping matrix
-% INPUT.eta = 0.05;
-INPUT.eta = 0;
+INPUT.eta = 0.05;
+% INPUT.eta = 0;
 
 % -- Time integration vector
 tfin = 10;                                   % [s] Final integration time
