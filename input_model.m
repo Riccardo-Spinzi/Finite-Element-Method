@@ -23,7 +23,7 @@ function INPUT = input_model
 INPUT = struct();
 
 % -- Elements
-N_mesh = 50;
+N_mesh = 500;
 l = 100;        % [mm]
 INPUT.elements = [(1:N_mesh)',(2:N_mesh+1)',2*ones(N_mesh,1), ones(N_mesh,1)];
 

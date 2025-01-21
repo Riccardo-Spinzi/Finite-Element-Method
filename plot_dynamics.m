@@ -27,6 +27,7 @@ ylabel('time [s]')
 colorbar
 
 idx = x == 20;
+find(idx)
 
 figure
 plot(y, Z(:,idx))
