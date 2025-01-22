@@ -119,6 +119,7 @@ end
 % build force vector (static and dynamic)
 for i = 1 : dim1
    punt = (INPUT.load(i,1)-1)*3 + INPUT.load(i,2);
+   MODEL.Force_AP = INPUT.load(i,1);
    MODEL.F(punt) = INPUT.load(i,3);
    MODEL.F_dyn(punt,:) = INPUT.load(i,3)*cos(2*pi*INPUT.freq*MODEL.time_vector); 
 end

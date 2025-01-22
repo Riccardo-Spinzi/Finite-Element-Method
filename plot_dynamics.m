@@ -26,11 +26,8 @@ xlabel('beam axis [m]')
 ylabel('time [s]')
 colorbar
 
-idx = x == 20;
-find(idx)
-
 figure
-plot(y, Z(:,idx))
+plot(y, Z(:,MODEL.Force_AP(1)))
 grid on
 xlabel("Time [s]")
 ylabel("Displacement [mm]")
