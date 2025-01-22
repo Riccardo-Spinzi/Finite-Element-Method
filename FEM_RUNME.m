@@ -25,5 +25,5 @@ ELEMENTS = force_recovery( MODEL, ELEMENTS );
 plot_dynamics( MODEL, NODES );
 
 %--- 4. Save data 
-python_dir = "C:\Users\r.spinzi\.vscode\Thesis_codes_TSEA_TLEA\BEAM\Beam_exact\Matlab_results";
-save_results( MODEL, python_dir )
+% python_dir = "C:\Users\r.spinzi\.vscode\Thesis_codes_TSEA_TLEA\BEAM\Beam_exact\Matlab_results";
+% save_results( MODEL, python_dir )
