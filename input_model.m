@@ -1,11 +1,11 @@
-function INPUT = input_model 
+function INPUT = input_model( N )
 
        % % --------------- FUNCTION INFO ---------------- % %
 
 % input_model is the function which loads all the data of the structure in
 % an organized way, in order to set up the problem correctly.
 %
-%                         INPUT = input_model
+%                      INPUT = input_model ( N ) 
 %
 % -------------------------------------------------------------------------
 % Input arguments:
@@ -15,15 +15,15 @@ function INPUT = input_model
 %
 % -------------------------------------------------------------------------
 % Output arguments:
-% INPUT            [struct]      INPUT structure     [multi] 
-% 
+% INPUT            [struct]         INPUT structure                 [multi] 
+% N                [1x1 double]     Number of structure elements      
 % -------------------------------------------------------------------------
 
 % -- Init
 INPUT = struct();
 
 % -- Elements
-N_mesh = 50;
+N_mesh = N;
 l = 100;        % [mm]
 INPUT.elements = [(1:N_mesh)',(2:N_mesh+1)',2*ones(N_mesh,1), ones(N_mesh,1)];
 

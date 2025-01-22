@@ -26,6 +26,10 @@ xlabel('beam axis [m]')
 ylabel('time [s]')
 colorbar
 
+if length(MODEL.Force_AP) > 1 
+    error("For dynamics, only Force at 1 point can be applied, WIP")
+end
+
 figure
 plot(y, Z(:,MODEL.Force_AP(1)))
 grid on
