@@ -1,11 +1,11 @@
-function save_results( MODEL, python_dir, matlab_dir ) 
+function save_results( MODEL, NODES, python_dir, matlab_dir ) 
 
        % % --------------- FUNCTION INFO ---------------- % %
 
 % save_results stocks the MODEL results into files that can be read by
 % Python to do post-processing.
 %
-%             save_results( MODEL, python_dir, matlab_dir )
+%          save_results( MODEL, NODES, python_dir, matlab_dir )
 %
 % -------------------------------------------------------------------------
 % Input arguments:
@@ -33,6 +33,9 @@ end
 
 % -- Get Python path
 fullFilePath_python = fullfile(python_dir, file_name);
+
+% -- Insert x coordinates into MODEL struct
+MODEL.coord_x = arrayfun(@(s) s.coord_x, NODES);
 
 % -- Save MODEL struct in Results
 save(fullFilePath_matlab, 'MODEL');

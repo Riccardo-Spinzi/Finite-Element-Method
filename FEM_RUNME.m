@@ -4,9 +4,9 @@ clc
 
 %% F.E. METHOD
 
-N_mesh_el = 50:50:1000;
-python_dir = "temp";
-matlab_dir = "temp";
+N_mesh_el = [5,10,20,40,80,160];
+python_dir = "C:\Users\r.spinzi\.vscode\Thesis_codes_TSEA_TLEA\BEAM\Beam_exact\Matlab_results";
+matlab_dir = "D:\r.spinzi\Documents\GitHub\Finite-Element-Method\Results";
 
 for i = 1 : length(N_mesh_el) 
     % --- 1. Pre-process
@@ -30,5 +30,5 @@ for i = 1 : length(N_mesh_el)
     plot_dynamics( MODEL, NODES );
     
     %--- 4. Save data 
-    save_results( MODEL, python_dir, matlab_dir )
+    % save_results( MODEL, NODES, python_dir, matlab_dir )
 end

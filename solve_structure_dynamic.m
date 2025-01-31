@@ -48,10 +48,13 @@ MODEL.IC( constr_dofs, :  ) = [];
 sol = crank_nicolson( MODEL );    % [mm]
 
 MODEL.U_time = sol(1:MODEL.nfree_dofs, :);
+MODEL.vel_time = sol(MODEL.nfree_dofs+1:2*MODEL.nfree_dofs, :);
 
 % Expand displacements to the global vector
 MODEL.U_unc_time = zeros( MODEL.ndof, length(MODEL.time_vector));
+MODEL.vel_unc_time = zeros( MODEL.ndof, length(MODEL.time_vector));
 MODEL.U_unc_time( MODEL.free_dofs, : ) = MODEL.U_time;
+MODEL.vel_unc_time( MODEL.free_dofs, : ) = MODEL.vel_time;
 MODEL.U_unc_time = MODEL.U_unc_time + MODEL.U_bar;
 
 return

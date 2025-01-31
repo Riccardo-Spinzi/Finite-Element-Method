@@ -41,7 +41,7 @@ INPUT.section_prop = [ INPUT.E*INPUT.A INPUT.E*INPUT.J];
 
 % -- Loading conditions
 node_idx = find(coords(:,2) == 20);
-INPUT.load = [ node_idx 2 -10];
+INPUT.load = [ node_idx 2 0];
 
 % -- Boundary conditions
 INPUT.spc = [ 1 1 0
@@ -68,9 +68,9 @@ INPUT.eta = 0.05;
 % INPUT.eta = 0;
 
 % -- Time integration vector
-tfin = 10;                                   % [s] Final integration time
+tfin = 3;                                   % [s] Final integration time
 N_steps = 1000;                             % [-] Number of time steps
 INPUT.time = linspace(0, tfin, N_steps-1);    % [s] Vector of times
 INPUT.freq = 1;                             % [Hz] Force frequency of oscillation
-INPUT.sine = false;
+INPUT.sine = true;
 return
