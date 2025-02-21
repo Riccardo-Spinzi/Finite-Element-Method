@@ -4,7 +4,7 @@ clc
 
 %% F.E. METHOD
 
-N_mesh_el = 50:50:1000;
+N_mesh_el = 4;
 python_dir = "temp";
 matlab_dir = "temp";
 
