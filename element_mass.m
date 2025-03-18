@@ -23,10 +23,15 @@ for i = 1 : n_els
     % Build local mass matrix
     if strcmp( ELEMENTS(i).type, 'truss') == 1  
         
-        % % Transformation matrix
-        % T = ELEMENTS(i).T;
-        
-        error("WIP")
+        % Transformation matrix
+        T = ELEMENTS(i).T;
+
+        % Properties and mass matrix
+        l = ELEMENTS(i).l;
+        rho = ELEMENTS(i).rho;
+        A = ELEMENTS(i).A;
+
+        ELEMENTS(i).M_el_loc = rho*A*l/6 * [2 1; 1 2];
         
     elseif strcmp( ELEMENTS(i).type, 'beam') == 1
 

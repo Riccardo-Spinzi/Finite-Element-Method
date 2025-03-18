@@ -25,7 +25,8 @@ INPUT = struct();
 % -- Elements
 N_mesh = N;
 l = 100;        % [mm]
-INPUT.elements = [(1:N_mesh)',(2:N_mesh+1)',2*ones(N_mesh,1), ones(N_mesh,1)];
+ID_element = 1; % set 1 for rod of 2 for beam structure
+INPUT.elements = [(1:N_mesh)',(2:N_mesh+1)',ID_element*ones(N_mesh,1), ones(N_mesh,1)];
 
 % -- Nodes
 nodes = linspace(0,l,N_mesh+1)';
@@ -41,12 +42,23 @@ INPUT.section_prop = [ INPUT.E*INPUT.A INPUT.E*INPUT.J];
 
 % -- Loading conditions
 node_idx = find(coords(:,2) == 20);
-INPUT.load = [ node_idx 2 -10];
+INPUT.load = [ node_idx 1 -10];
 
 % -- Boundary conditions
 INPUT.spc = [ 1 1 0
               1 2 0
-              INPUT.nodes(end,1) 2 0]; % look for last node automatically
+              1 3 0
+              2 2 0
+              2 3 0
+              3 2 0
+              3 3 0
+              4 2 0
+              4 3 0
+              5 2 0
+              5 3 0
+              INPUT.nodes(end,1) 1 0
+              INPUT.nodes(end,1) 2 0
+              INPUT.nodes(end,1) 3 0]; % look for last node automatically
 
 % --- Concentrated springs
 INPUT.springs = [ ];
@@ -64,7 +76,7 @@ INPUT.mode = 3;
 INPUT.rho = 2700e-9;             % [kg/mm^3]
 
 % -- Damping factor for lumped damping matrix
-INPUT.eta = 0.05;
+INPUT.eta = 0.0005;
 % INPUT.eta = 0;
 
 % -- Time integration vector

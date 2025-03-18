@@ -18,7 +18,8 @@ function plot_dynamics( MODEL, NODES )
 x = [NODES.coord_x];
 y = MODEL.time_vector;
 [X,Y] = meshgrid(x,y);
-Z = MODEL.U_unc_time(2:3:end,:)';
+% if strcmp(MODEL.)  --> fare in modo di distinguere 1 e 2 se barra o trave
+Z = MODEL.U_unc_time(1:3:end,:)';
 
 figure
 surf(X,Y,Z,'EdgeColor', 'none')

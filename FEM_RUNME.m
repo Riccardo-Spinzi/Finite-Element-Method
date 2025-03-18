@@ -4,7 +4,7 @@ clc
 
 %% F.E. METHOD
 
-N_mesh_el = 4;
+N_mesh_el = 5;
 python_dir = "temp";
 matlab_dir = "temp";
 
@@ -18,7 +18,7 @@ for i = 1 : length(N_mesh_el)
     %--- 3.a Post-process: recovery of forces
     ELEMENTS = force_recovery( MODEL, ELEMENTS );
     
-    %--- 3.b  Post-process: plot deformed shapes
+    % --- 3.b  Post-process: plot deformed shapes
     % plot_deformed_shapes( MODEL, ELEMENTS, NODES );
     
     %--- 3.c Post-process: plot vibration modes
@@ -30,5 +30,5 @@ for i = 1 : length(N_mesh_el)
     plot_dynamics( MODEL, NODES );
     
     %--- 4. Save data 
-    save_results( MODEL, python_dir, matlab_dir )
+    % save_results( MODEL, python_dir, matlab_dir )
 end
